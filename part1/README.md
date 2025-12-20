@@ -85,3 +85,11 @@ The documentation prioritizes clarity, readability, and implementation guidance.
 Outcome
 
 By completing Part 1, this repository provides a comprehensive technical blueprint of the HBnB Evolution application. This documentation lays a solid foundation for the implementation phases that follow, ensuring alignment between requirements, design, and development.
+## Sequence Diagrams
+
+### User Registration
+![User Registration Sequence](./diagrams/seq-user-registration.png)
+
+### Place Creation
+![Place Creation Sequence](./diagrams/seq-place-creation.png)
+
