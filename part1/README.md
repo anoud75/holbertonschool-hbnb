@@ -120,14 +120,14 @@ Password is hashed for security
 User data is saved to database
 Confirmation response is returned
 
-### Flow Explanation
+#### Flow Explanation
 
 Validation Layer: API validates request format before passing to business logic
 Duplication Check: System ensures email uniqueness before creating account
 Security: Password is hashed before storage, never stored in plain text
 Response: User receives confirmation with their new user ID
 
-## 2. Place Creation
+### 2. Place Creation
 Description
 This sequence diagram shows how a user creates a new place listing in the system.
 Key Steps
