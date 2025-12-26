@@ -157,7 +157,7 @@ Business Logic validates place exists and user hasn't already reviewed it
 Review is saved with references to user and place
 Review details are returned
 
-### Flow Explanation
+#### Flow Explanation
 
 Authentication: User must be logged in to submit a review
 Place Validation: System ensures the place exists before accepting review
