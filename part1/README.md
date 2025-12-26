@@ -166,7 +166,7 @@ Owner Restriction: Place owners cannot review their own listings
 Rating Update: Place's overall rating is recalculated after new review
 Response: Complete review details with user and place information
 
-## 4. Fetching a List of Places
+### 4. Fetching a List of Places
 Description
 This sequence diagram shows how the system retrieves and returns a filtered list of places based on user criteria.
 Key Steps
