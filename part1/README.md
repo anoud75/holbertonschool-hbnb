@@ -146,7 +146,7 @@ Validation: Price, coordinates, and required fields are validated
 Amenities: Multiple amenities can be associated with the place
 Response: Complete place details including relationships are returned
 
-## 3. Review Submission
+### 3. Review Submission
 Description
 This sequence diagram demonstrates how a user submits a review for a place they've visited.
 Key Steps
