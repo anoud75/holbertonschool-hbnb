@@ -177,7 +177,7 @@ Business Logic applies filters and sorting
 Database returns matching places
 Results are formatted and returned to user
 
-### Flow Explanation
+#### Flow Explanation
 
 Query Parameters: API accepts multiple optional filters for flexible searching
 Validation: Parameters are validated before processing (price ranges, coordinates)
