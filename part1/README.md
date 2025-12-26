@@ -15,10 +15,10 @@ The HBnB application is structured using a layered architecture with three disti
 ### The Facade Pattern
 The Facade Pattern serves as the communication interface between layers, providing:
 
-Simplified Interface: Unified access point for layer interactions
-Decoupling: Layers remain independent and loosely coupled
-Flexibility: Easy to modify internal implementations without affecting other layers
-Maintainability: Centralized control of inter-layer communication
+- Simplified Interface: Unified access point for layer interactions
+- Decoupling: Layers remain independent and loosely coupled
+- Flexibility: Easy to modify internal implementations without affecting other layers
+- Maintainability: Centralized control of inter-layer communication
 
 
 # Class Diagram
