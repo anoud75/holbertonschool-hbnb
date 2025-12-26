@@ -26,11 +26,11 @@ Complete architectural overview including high-level package diagrams, detailed 
 
 ## 📖 How to Use This Documentation
 
-Start with the High-Level Package Diagram in Part 1 to understand overall architecture
+- Start with the High-Level Package Diagram in Part 1 to understand overall architecture
 
-Review the Detailed Class Diagrams in Part 1 to understand entity relationships
+- Review the Detailed Class Diagrams in Part 1 to understand entity relationships
 
-Explore Sequence Diagrams in Part 1 to see how API calls flow through the system
+- Explore Sequence Diagrams in Part 1 to see how API calls flow through the system
 
 
 ## 🤝 Contributing
