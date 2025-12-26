@@ -26,7 +26,7 @@ Objective
 Design a comprehensive class diagram depicting the entities in the Business Logic layer, including their attributes, methods, and relationships.
 
 ## Core Entities
-1. User Entity
+### 1. User Entity
 Purpose: Represents application users who can create places and write reviews
 Key Attributes:
 
@@ -44,7 +44,7 @@ register() - Create new user account
 authenticate() - Verify user credentials
 update_profile() - Modify user information
 
-2. Place Entity
+### 2. Place Entity
 Purpose: Represents property listings created by users
 Key Attributes:
 
@@ -65,7 +65,7 @@ update() - Modify place details
 delete() - Remove place listing
 add_amenity() - Associate amenity with place
 
-3. Review Entity
+### 3. Review Entity
 Purpose: Represents user feedback on places
 Key Attributes:
 
@@ -83,7 +83,7 @@ submit() - Create new review
 update() - Modify review
 delete() - Remove review
 
-4. Amenity Entity
+### 4. Amenity Entity
 Purpose: Represents features/facilities associated with places
 Key Attributes:
 
