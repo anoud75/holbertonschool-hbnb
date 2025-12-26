@@ -138,7 +138,7 @@ Business Logic validates place data and ownership
 Place is saved with owner reference
 Place details are returned to user
 
-### Flow Explanation
+#### Flow Explanation
 
 Authentication: User must be authenticated to create a place
 Ownership: Place is automatically linked to the authenticated user
