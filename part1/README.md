@@ -1,54 +1,188 @@
-Part 1: Technical Documentation
+# Part 1: Architecture & Business Logic Design
+This section contains the foundational architectural documentation for the HBnB application.
+
+# High-Level Package Diagram
+Objective
+Illustrate the three-layer architecture of the HBnB application and demonstrate communication between layers using the Facade pattern.
+
+## Architecture Overview
+The HBnB application is structured using a layered architecture with three distinct layers:
+1. Presentation Layer (Services, API)
+2. Business Logic Layer (Models)
+3. Persistence Layer (Database)
+
+
+### The Facade Pattern
+The Facade Pattern serves as the communication interface between layers, providing:
+
+Simplified Interface: Unified access point for layer interactions
+Decoupling: Layers remain independent and loosely coupled
+Flexibility: Easy to modify internal implementations without affecting other layers
+Maintainability: Centralized control of inter-layer communication
+
+
+# Class Diagram
+Objective
+Design a comprehensive class diagram depicting the entities in the Business Logic layer, including their attributes, methods, and relationships.
+
+## Core Entities
+1. User Entity
+Purpose: Represents application users who can create places and write reviews
+Key Attributes:
+
+id (UUID4) - Unique identifier
+email (String) - User email address
+password (String) - Hashed password
+first_name (String) - User's first name
+last_name (String) - User's last name
+created_at (DateTime) - Account creation timestamp
+updated_at (DateTime) - Last update timestamp
+
+Key Methods:
+
+register() - Create new user account
+authenticate() - Verify user credentials
+update_profile() - Modify user information
+
+2. Place Entity
+Purpose: Represents property listings created by users
+Key Attributes:
+
+id (UUID4) - Unique identifier
+title (String) - Place title
+description (Text) - Detailed description
+price (Decimal) - Price per night
+latitude (Float) - Geographic coordinate
+longitude (Float) - Geographic coordinate
+owner_id (UUID4) - Reference to User
+created_at (DateTime) - Creation timestamp
+updated_at (DateTime) - Last update timestamp
+
+Key Methods:
+
+create() - Create new place listing
+update() - Modify place details
+delete() - Remove place listing
+add_amenity() - Associate amenity with place
+
+3. Review Entity
+Purpose: Represents user feedback on places
+Key Attributes:
+
+id (UUID4) - Unique identifier
+rating (Integer) - Rating score (1-5)
+comment (Text) - Review text
+user_id (UUID4) - Reference to User
+place_id (UUID4) - Reference to Place
+created_at (DateTime) - Creation timestamp
+updated_at (DateTime) - Last update timestamp
+
+Key Methods:
+
+submit() - Create new review
+update() - Modify review
+delete() - Remove review
+
+4. Amenity Entity
+Purpose: Represents features/facilities associated with places
+Key Attributes:
+
+id (UUID4) - Unique identifier
+name (String) - Amenity name
+description (String) - Amenity description
+created_at (DateTime) - Creation timestamp
+updated_at (DateTime) - Last update timestamp
+
+Key Methods:
+
+create() - Add new amenity type
+update() - Modify amenity details
+
+
+# API Sequence Diagrams
 Overview
-This part focuses on designing and documenting the technical foundation of the HBnB Evolution application, a simplified Airbnb-like system. The goal is to provide a clear and structured blueprint of the system architecture, business logic, and component interactions before moving into implementation.
-The documentation serves as a reference for understanding how different layers of the application collaborate to fulfill user requests while respecting the defined business rules and constraints.
+Each sequence diagram demonstrates:
 
-Objectives
-The primary objectives of this part are to:
-Define the overall layered architecture of the application.
-Model the core business entities and their relationships.
-Illustrate the interaction flow between system layers for key API calls.
-Ensure all designs accurately reflect the specified business rules and requirements.
-Provide diagrams detailed enough to guide future implementation phases.
+Request Flow: How API requests travel through system layers
+Layer Interactions: Communication between Presentation, Business Logic, and Persistence layers
+Data Processing: Validation, transformation, and storage operations
+Response Flow: How results are returned to the client
 
-Application Scope
-The HBnB Evolution application supports the following core functionalities:
-User Management: User registration, profile updates, role identification (regular user or administrator).
-Place Management: Creation, update, deletion, and listing of property listings owned by users.
-Review Management: Submission and management of reviews for places, including ratings and comments.
-Amenity Management: Management of amenities that can be associated with places.
-All entities are uniquely identified and include audit information such as creation and update timestamps.
+## 1. User Registration
+Description
+This sequence diagram illustrates the process of a new user registering for an account in the HBnB application.
+Key Steps
 
-Architecture Overview
-The application follows a three-layered architecture:
-Presentation Layer Handles user interactions through APIs and services. It receives requests, returns responses, and delegates processing to the business layer.
-Business Logic Layer Contains the core application logic and domain models (User, Place, Review, Amenity). This layer enforces business rules and coordinates data operations.
-Persistence Layer Responsible for data storage and retrieval. All entities are persisted in a database accessed through this layer.
-Communication between layers is designed to follow clean separation of concerns and is illustrated using UML diagrams.
+User submits registration data (email, password, name)
+API validates input format and required fields
+Business Logic checks for duplicate email
+Password is hashed for security
+User data is saved to database
+Confirmation response is returned
 
-Deliverables
-This part includes the following artifacts:
-High-Level Package Diagram Illustrates the layered architecture and communication between layers using the facade pattern.
-Detailed Class Diagram (Business Logic Layer) Models the main entities, their attributes, methods, and relationships, including associations between places and amenities.
-Sequence Diagrams for API Calls Four UML sequence diagrams demonstrating the flow of interactions for:
-User Registration
-Place Creation
-Review Submission
-Fetching a List of Places
-Explanatory Notes Brief descriptions accompanying each diagram to clarify purpose, flow, and design decisions.
+### Flow Explanation
 
-Design Principles
-UML notation is used consistently across all diagrams.
-Clear separation between presentation, business, and persistence concerns.
-Business rules and constraints are strictly reflected in the diagrams.
-The documentation prioritizes clarity, readability, and implementation guidance.
+Validation Layer: API validates request format before passing to business logic
+Duplication Check: System ensures email uniqueness before creating account
+Security: Password is hashed before storage, never stored in plain text
+Response: User receives confirmation with their new user ID
 
-Outcome
-By completing Part 1, this repository provides a comprehensive technical blueprint of the HBnB Evolution application. This documentation lays a solid foundation for the implementation phases that follow, ensuring alignment between requirements, design, and development.
-## Sequence Diagrams
+## 2. Place Creation
+Description
+This sequence diagram shows how a user creates a new place listing in the system.
+Key Steps
 
-### User Registration
-![User Registration Sequence](./diagrams/seq-user-registration.png)
+Authenticated user submits place details
+API verifies user authentication token
+Business Logic validates place data and ownership
+Place is saved with owner reference
+Place details are returned to user
 
-### Place Creation
-![Place Creation Sequence](./diagrams/seq-place-creation.png)
+### Flow Explanation
+
+Authentication: User must be authenticated to create a place
+Ownership: Place is automatically linked to the authenticated user
+Validation: Price, coordinates, and required fields are validated
+Amenities: Multiple amenities can be associated with the place
+Response: Complete place details including relationships are returned
+
+## 3. Review Submission
+Description
+This sequence diagram demonstrates how a user submits a review for a place they've visited.
+Key Steps
+
+Authenticated user submits review with rating and comment
+System verifies user is authenticated
+Business Logic validates place exists and user hasn't already reviewed it
+Review is saved with references to user and place
+Review details are returned
+
+### Flow Explanation
+
+Authentication: User must be logged in to submit a review
+Place Validation: System ensures the place exists before accepting review
+Duplicate Prevention: Users cannot submit multiple reviews for the same place
+Owner Restriction: Place owners cannot review their own listings
+Rating Update: Place's overall rating is recalculated after new review
+Response: Complete review details with user and place information
+
+## 4. Fetching a List of Places
+Description
+This sequence diagram shows how the system retrieves and returns a filtered list of places based on user criteria.
+Key Steps
+
+User requests places with optional filters (location, price, amenities)
+API processes query parameters
+Business Logic applies filters and sorting
+Database returns matching places
+Results are formatted and returned to user
+
+### Flow Explanation
+
+Query Parameters: API accepts multiple optional filters for flexible searching
+Validation: Parameters are validated before processing (price ranges, coordinates)
+Multiple Filters: System can apply price, location, and amenity filters simultaneously
+Distance Calculation: Geographic distance is calculated when location filters are used
+Enrichment: Each place is enriched with owner details, amenities, and average rating
+Pagination: Results are paginated to improve performance and user experience
+Response: Formatted list with complete place information and pagination metadata
