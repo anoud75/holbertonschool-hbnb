@@ -18,11 +18,11 @@ Complete architectural overview including high-level package diagrams, detailed 
 
 ## 🛠️ Technologies & Tools
 
-UML Diagrams - Standard modeling language for software architecture
+- UML Diagrams - Standard modeling language for software architecture
 
-Mermaid.js - Code-based diagram generation for version control
+- Mermaid.js - Code-based diagram generation for version control
 
-Design Patterns - Facade pattern for layer communication
+- Design Patterns - Facade pattern for layer communication
 
 ## 📖 How to Use This Documentation
 
