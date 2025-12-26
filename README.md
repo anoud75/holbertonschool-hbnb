@@ -7,13 +7,13 @@ Complete architectural overview including high-level package diagrams, detailed 
 
 ## 📊 What's Included
 
-High-Level Package Diagrams - Architectural overview showing layer organization
+- High-Level Package Diagrams - Architectural overview showing layer organization
 
-Detailed Class Diagrams - Business logic entities with attributes, methods, and relationships
+- Detailed Class Diagrams - Business logic entities with attributes, methods, and relationships
 
-API Sequence Diagrams - Step-by-step interaction flows for key API operations
+- API Sequence Diagrams - Step-by-step interaction flows for key API operations
 
-Explanatory Documentation - Detailed notes on design decisions and patterns
+- Explanatory Documentation - Detailed notes on design decisions and patterns
 
 
 ## 🛠️ Technologies & Tools
