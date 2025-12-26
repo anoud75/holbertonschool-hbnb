@@ -108,7 +108,7 @@ Layer Interactions: Communication between Presentation, Business Logic, and Pers
 Data Processing: Validation, transformation, and storage operations
 Response Flow: How results are returned to the client
 
-## 1. User Registration
+### 1. User Registration
 Description
 This sequence diagram illustrates the process of a new user registering for an account in the HBnB application.
 Key Steps
