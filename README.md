@@ -34,8 +34,8 @@ Complete architectural overview including high-level package diagrams, detailed 
 
 
 ## 🤝 Contributing
-Amaal AlOtaibi
+- Amaal AlOtaibi
 
-Alanoud Alsmail
+- Alanoud Alsmail
 
-Ahmed Alomani
+- Ahmed Alomani
