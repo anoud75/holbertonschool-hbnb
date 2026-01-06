@@ -1,15 +1,19 @@
 #!/usr/bin/python3
+"""Facade pattern."""
 from app.persistence.repository import InMemoryRepository
 from app.models.user import User
 
+
 class HBnBFacade:
+    """Facade class."""
+
     def __init__(self):
         self.user_repo = InMemoryRepository()
         self.place_repo = InMemoryRepository()
         self.review_repo = InMemoryRepository()
         self.amenity_repo = InMemoryRepository()
 
-    ` def create_user(self, data):
+    def create_user(self, data):
         """Create user."""
         user = User(
             first_name=data['first_name'],
