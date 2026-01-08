@@ -9,6 +9,10 @@ amenity_model = api.model('Amenity', {
 
 @api.route('/')
 class AmenityList(Resource):
+    """
+    Resource for managing the collection of amenities.
+    Handles creation of new amenities and retrieval of the full list.
+    """
     @api.expect(amenity_model)
     @api.response(201, 'Amenity successfully created')
     @api.response(400, 'Invalid input data')
@@ -52,4 +56,4 @@ class AmenityList(Resource):
 
             facade.update_amenity(amenity_id, amenity_data)
 
-            return {'message': 'Amenity updated successfully'}, 200 
+            return {'message': 'Amenity updated successfully'}, 200
