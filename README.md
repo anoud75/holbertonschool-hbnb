@@ -1,41 +1,62 @@
-# HBnB Application Architecture Documentation
-This repository contains comprehensive technical documentation for the HBnB (HolbertonBnB) application, including architectural diagrams, class structures, and API interaction flows. The documentation is organized into multiple parts, each focusing on different aspects of the system architecture.
+# HBnB Application
 
-## 📋 Documentation Parts
-Part 1: Architecture & Business Logic Design
-Complete architectural overview including high-level package diagrams, detailed class structures for the business logic layer and API Sequence Diagrams.
+A simplified AirBnB clone application developed as part of the Holberton School curriculum.
 
-## 📊 What's Included
+## 📋 Project Overview
 
-- High-Level Package Diagrams - Architectural overview showing layer organization
+This project is divided into multiple parts, each focusing on different aspects of application development:
 
-- Detailed Class Diagrams - Business logic entities with attributes, methods, and relationships
+### Part 1: Architecture & Design Documentation
+Complete technical documentation including:
+- High-Level Package Diagrams
+- Detailed Class Diagrams for Business Logic
+- API Sequence Diagrams
+- Technical Design Document
 
-- API Sequence Diagrams - Step-by-step interaction flows for key API operations
+Location: part1/
 
-- Explanatory Documentation - Detailed notes on design decisions and patterns
+### Part 2: Business Logic and API Implementation
+Implementation of RESTful API endpoints and core business logic:
+- User management
+- Place listings
+- Reviews system
+- Amenities management
 
+Location: part2/
 
-## 🛠️ Technologies & Tools
+## 🏗 Architecture
 
-- UML Diagrams - Standard modeling language for software architecture
+The application follows a three-layer architecture:
+┌─────────────────────────┐
+│  Presentation Layer     │  API endpoints
+├─────────────────────────┤
+│  Business Logic Layer   │  Models & validation
+├─────────────────────────┤
+│  Persistence Layer      │  Data storage
+└─────────────────────────┘
 
-- Mermaid.js - Code-based diagram generation for version control
+## 📚 Core Entities
 
-- Design Patterns - Facade pattern for layer communication
+- User: User accounts with email and profile information
+- Place: Property listings with location and pricing
+- Review: User reviews with ratings (1-5)
+- Amenity: Property features and facilities
 
-## 📖 How to Use This Documentation
+## 🛠 Technologies
 
-- Start with the High-Level Package Diagram in Part 1 to understand overall architecture
+- Python 3.10: Programming language
+- Flask: Web framework
+- Flask-RESTx: REST API with Swagger documentation
+- UML: System design and documentation
 
-- Review the Detailed Class Diagrams in Part 1 to understand entity relationships
+## 📖 Documentation
 
-- Explore Sequence Diagrams in Part 1 to see how API calls flow through the system
+- Technical Design Document: part1/3. Technical Design Document: HBnB Project.pdf
+- UML Diagrams: part1/diagrams/
+- API Documentation: Available at /api/v1/docs when running
 
+## 🤝 Contributors
 
-## 🤝 Contributing
 - Amaal AlOtaibi
-
 - Alanoud Alsmail
-
-- Ahmed Alomani
+- Norah Alnujidi
