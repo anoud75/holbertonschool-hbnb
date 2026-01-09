@@ -27,13 +27,10 @@ Location: part2/
 ## 🏗 Architecture
 
 The application follows a three-layer architecture:
-┌─────────────────────────┐
-│  Presentation Layer     │  API endpoints
-├─────────────────────────┤
-│  Business Logic Layer   │  Models & validation
-├─────────────────────────┤
-│  Persistence Layer      │  Data storage
-└─────────────────────────┘
+
+- **Presentation Layer**: API endpoints (Flask-RESTx)
+- **Business Logic Layer**: Models & validation
+- **Persistence Layer**: Data storage (In-Memory Repository)
 
 ## 📚 Core Entities
 
