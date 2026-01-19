@@ -1,4 +1,4 @@
-from app.persistence.repository import InMemoryRepository
+from app.persistence.repository import SQLAlchemyRepository
 from app.models.user import User
 from app.models.amenity import Amenity
 from app.models.place import Place
@@ -12,10 +12,10 @@ class HBnBFacade:
         """
         Initialize the Facade with in-memory repositories for each entity type.
         """
-        self.user_repo = InMemoryRepository()
-        self.place_repo = InMemoryRepository()
-        self.review_repo = InMemoryRepository()
-        self.amenity_repo = InMemoryRepository()
+        self.user_repository = SQLAlchemyRepository(User)
+        self.place_repository = SQLAlchemyRepository(Place)
+        self.review_repository = SQLAlchemyRepository(Review)
+        self.amenity_repository = SQLAlchemyRepository(Amenity)
 
     # ---- User ----
     def create_user(self, user_data):
@@ -30,7 +30,7 @@ class HBnBFacade:
             User: The created User object.
         """
         user = User(**user_data)
-        self.user_repo.add(user)
+        self.user_repository.add(user)
         return user
     
     def get_user(self, user_id):
@@ -43,7 +43,7 @@ class HBnBFacade:
         Returns:
             User: The User object if found, else None.
         """
-        return self.user_repo.get(user_id)
+        return self.user_repository.get(user_id)
     
     def get_user_by_email(self, email):
         """
@@ -55,7 +55,7 @@ class HBnBFacade:
         Returns:
             User: The User object if found, else None.
         """
-        return self.user_repo.get_by_attribute('email', email)
+        return self.user_repository.get_by_attribute('email', email)
     
     def get_all_users(self):
         """
@@ -64,7 +64,7 @@ class HBnBFacade:
         Returns:
             list: A list of all User objects.
         """
-        return self.user_repo.get_all()
+        return self.user_repository.get_all()
     
     def update_user(self, user_id, user_data):
         """
@@ -77,7 +77,7 @@ class HBnBFacade:
         Returns:
             User: The updated User object, or None if the user does not exist.
         """
-        user = self.user_repo.get(user_id)
+        user = self.user_repository.get(user_id)
         if user:
             for key, value in user_data.items():
                 if key != 'id' and key != 'email':
@@ -96,16 +96,16 @@ class HBnBFacade:
             Amenity: The created Amenity object.
         """
         amenity = Amenity(**amenity_data)
-        self.amenity_repo.add(amenity)
+        self.amenity_repository.add(amenity)
         return amenity
 
     def get_amenity(self, amenity_id):
         """Retrieve an amenity by ID."""
-        return self.amenity_repo.get(amenity_id)
+        return self.amenity_repository.get(amenity_id)
 
     def get_all_amenities(self):
         """Retrieve all available amenities."""
-        return self.amenity_repo.get_all()
+        return self.amenity_repository.get_all()
 
     def update_amenity(self, amenity_id, amenity_data):
         """
@@ -118,7 +118,7 @@ class HBnBFacade:
         Returns:
             Amenity: The updated object, or None if not found.
         """
-        amenity = self.amenity_repo.get(amenity_id)
+        amenity = self.amenity_repository.get(amenity_id)
         if amenity:
             amenity.update(amenity_data)
         return amenity
@@ -156,16 +156,16 @@ class HBnBFacade:
             amenity = self.get_amenity(amenity_id)
             if amenity:
                 place.add_amenity(amenity)
-        self.place_repo.add(place)
+        self.place_repository.add(place)
         return place
 
     def get_place(self, place_id):
         """Retrieve a place by ID."""
-        return self.place_repo.get(place_id)
+        return self.place_repository.get(place_id)
 
     def get_all_places(self):
         """Retrieve all places."""
-        return self.place_repo.get_all()
+        return self.place_repository.get_all()
 
     def update_place(self, place_id, place_data):
         """
@@ -177,7 +177,7 @@ class HBnBFacade:
         Returns:
             Place: The updated object or None.
         """
-        place = self.place_repo.get(place_id)
+        place = self.place_repository.get(place_id)
         if place:
             for key, value in place_data.items():
                 if key != 'id' and key != 'owner_id' and key != 'amenities':
@@ -222,18 +222,18 @@ class HBnBFacade:
             user=user
         )
 
-        self.review_repo.add(review)
+        self.review_repository.add(review)
         place.add_review(review)
 
         return review
 
     def get_review(self, review_id):
         """Retrieve a review by ID."""
-        return self.review_repo.get(review_id)
+        return self.review_repository.get(review_id)
 
     def get_all_reviews(self):
         """Retrieve all reviews in the system."""
-        return self.amenity_repo.get_all()
+        return self.amenity_repository.get_all()
 
     def get_reviews_by_place(self, place_id):
         """
@@ -253,7 +253,7 @@ class HBnBFacade:
 
     def update_review(self, review_id, review_data):
         """Update review details (text, rating)."""
-        review = self.review_repo.get(review_id)
+        review = self.review_repository.get(review_id)
         if review:
             review.update(review_data)
         return review
@@ -266,6 +266,6 @@ class HBnBFacade:
         Args:
             review_id (str): The ID of the review to delete.
         """
-        review = self.review_repo.get(review_id)
+        review = self.review_repository.get(review_id)
         if review:
-            self.review_repo.delete(review_id)
+            self.review_repository.delete(review_id)
