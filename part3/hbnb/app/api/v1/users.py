@@ -71,5 +71,4 @@ class UserResource(Resource):
             return {'error': 'User not found'}, 404
 
         updated_user = facade.update_user(user_id, user_data)
-        return {'id': updated_user.id, 'first_name': upda
-            ted_user.first_name, 'last_name': updated_user.last_name, 'email': updated_user.email}, 200
+        return {'id': updated_user.id, 'first_name': updated_user.first_name, 'last_name': updated_user.last_name, 'email': updated_user.email}, 200

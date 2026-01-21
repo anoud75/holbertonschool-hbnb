@@ -134,7 +134,7 @@ class InMemoryRepository(Repository):
         """
         return next((obj for obj in self._storage.values() if getattr(obj, attr_name) == attr_value), None) 
     
-from app import db
+from app.extensions import db
 from app.models import User, Place, Review, Amenity 
 
 class SQLAlchemyRepository(Repository):
