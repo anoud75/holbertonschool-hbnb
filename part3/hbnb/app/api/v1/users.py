@@ -129,7 +129,7 @@ class AdminUserModify(Resource):
             return {'error': 'Admin privileges required'}, 403
         
         # 2️⃣ Get payload
-        data = request.json
+        data = api.payload
         email = data.get('email')
 
         # 3️⃣ Ensure email uniqueness
