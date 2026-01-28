@@ -32,33 +32,33 @@ class AmenityList(Resource):
         amenities = facade.get_all_amenities()
         return[{'id': a.id, 'name': a.name} for a in amenities], 200
 
-    @api.route('/<amenity_id>')
-    class AmenityResource(Resource):
-        @api.response(200, 'Amenity details retrieved successfully')
-        @api.response(404, 'Amenity not found')
-        def get(self, amenity_id):
-            """Get amenity details by ID"""
-            amenity = facade.get_amenity(amenity_id)
-            if not amenity:
-                return {'error': 'Amenity not found'}, 404
-            return {'id': amenity.id, 'name': amenity.name}, 200
+@api.route('/<amenity_id>')
+class AmenityResource(Resource):
+    @api.response(200, 'Amenity details retrieved successfully')
+    @api.response(404, 'Amenity not found')
+    def get(self, amenity_id):
+        """Get amenity details by ID"""
+        amenity = facade.get_amenity(amenity_id)
+        if not amenity:
+            return {'error': 'Amenity not found'}, 404
+        return {'id': amenity.id, 'name': amenity.name}, 200
 
-        @api.expect(amenity_model)
-        @api.response(200, 'Amenity updated successfully')
-        @api.response(404, 'Amenity not found')
-        @api.response(400, 'Invalid input data')
-        def put(self, amenity_id):
-            """Update an amenity information"""
-            amenity_data = api.payload
+    @api.expect(amenity_model)
+    @api.response(200, 'Amenity updated successfully')
+    @api.response(404, 'Amenity not found')
+    @api.response(400, 'Invalid input data')
+    def put(self, amenity_id):
+        """Update an amenity information"""
+        amenity_data = api.payload
 
-            amenity = facade.get_amenity(amenity_id)
+        amenity = facade.get_amenity(amenity_id)
 
-            if not amenity:
-                return {'error': 'Amenity not found'}, 404
+        if not amenity:
+            return {'error': 'Amenity not found'}, 404
 
-            facade.update_amenity(amenity_id, amenity_data)
+        facade.update_amenity(amenity_id, amenity_data)
 
-            return {'message': 'Amenity updated successfully'}, 200
+        return {'message': 'Amenity updated successfully'}, 200
 
 
 @api.route('/amenities/')
