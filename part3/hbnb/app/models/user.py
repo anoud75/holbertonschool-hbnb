@@ -1,106 +1,37 @@
 from app.models.base import BaseModel
+from app.extensions import bcrypt, db
+from sqlalchemy.orm import validates
 import re
-from app.extensions import bcrypt
 
 class User(BaseModel):
-    """
-    Represents a User in the HBnB application.
+    __tablename__ = 'users'
 
-    This class manages user identity and administrative status. It inherits 
-    common attributes (like ID, created_at) from BaseModel and strictly validates 
-    input data such as email format and name length.
-    """
-    def __init__(self, first_name, last_name, email, password, is_admin=False):
-        """
-        Initialize a new User.
+    first_name = db.Column(db.String(50), nullable=False)
+    last_name = db.Column(db.String(50), nullable=False)
+    email = db.Column(db.String(120), nullable=False, unique=True)
+    password = db.Column(db.String(128), nullable=False)
+    is_admin = db.Column(db.Boolean, default=False)
 
-        Args:
-            first_name (str): The user's first name (max 50 chars).
-            last_name (str): The user's last name (max 50 chars).
-            email (str): A valid email address.
-            password (str): encrypted string serve as a user password
-            is_admin (bool, optional): Administrative privilege flag. Defaults to False.
+    # def __init__(self, **kwargs):
+    #     if 'password' in kwargs:
+    #         kwargs['password'] = bcrypt.generate_password_hash(kwargs['password']).decode('utf-8')
+    #     super().__init__(**kwargs)
 
-        Raises:
-            ValueError: If name length exceeds limits or email format is invalid.
-        """
-        super().__init__()
-        self.first_name = first_name
-        self.last_name = last_name
-        self.email = email
-        self.hash_password(password)
-        self.is_admin = is_admin
-
-    @property
-    def first_name(self):
-        """Get the user's first name."""
-        return self._first_name
-
-    @first_name.setter
-    def first_name(self, value):
-        """
-        Set the first name with validation.
-
-        Args:
-            value (str): The new first name.
-
-        Raises:
-            ValueError: If the value is empty or exceeds 50 characters.
-        """
-        if not value or len(value) > 50:
-            raise ValueError("First name must be provided and under 50 characters")
-        self._first_name = value
-
-    @property
-    def last_name(self):
-        """Get the user's last name."""
-        return self._last_name
-
-    @last_name.setter
-    def last_name(self, value):
-        """
-        Set the last name with validation.
-
-        Args:
-            value (str): The new last name.
-
-        Raises:
-            ValueError: If the value is empty or exceeds 50 characters.
-        """
-        if not value or len(value) > 50:
-            raise ValueError("Last name must be provided and under 50 characters")
-        self._last_name = value
-
-    @property
-    def email(self):
-        """Get the user's email address."""
-        return self._email
-
-    @email.setter
-    def email(self, value):
-        """
-        Set the email with Regex validation.
-
-        Validates the email against a standard pattern (user@domain.tld).
-
-        Args:
-            value (str): The email address to set.
-
-        Raises:
-            ValueError: If the email format is invalid or empty.
-        """
+    @validates('email')
+    def validate_email(self, key, email):
         email_regex = r'^[\w\.-]+@[\w\.-]+\.\w+$'
-        if not value or not re.match(email_regex, value):
+        if not email or not re.match(email_regex, email):
             raise ValueError("Invalid email format")
-        self._email = value
+        return email
 
+    @validates('first_name', 'last_name')
+    def validate_names(self, key, name):
+        if not name or len(name) > 50:
+            raise ValueError(f"{key.replace('_', ' ').capitalize()} must be under 50 characters")
+        return name
 
     def hash_password(self, password):
-        """Hashes the password before storing it."""
-        self.password = bcrypt.generate_password_hash(password)
-
+        self.password = bcrypt.generate_password_hash(password).decode('utf-8')
 
     def verify_password(self, password):
-        """Verifies if the provided password matches the hashed password."""
         return bcrypt.check_password_hash(self.password, password)
-

@@ -34,10 +34,10 @@ def create_app(config_class="config.DevelopmentConfig"):
         Flask: The fully configured Flask application instance, ready to be run.
     """
     app = Flask(__name__)
+    app.config.from_object(config_class)
     bcrypt.init_app(app)
     jwt.init_app(app)
     db.init_app(app)
-    app.config.from_object(config_class)
     api = Api(app, version='1.0', title='HBnB API', description='HBnB Application API', doc='/api/v1/')
 
     api.add_namespace(users_ns, path='/api/v1/users')

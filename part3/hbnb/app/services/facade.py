@@ -4,6 +4,7 @@ from app.models.user import User
 from app.models.amenity import Amenity
 from app.models.place import Place
 from app.models.review import Review
+from app.persistence.user_repository import UserRepository
 
 class HBnBFacade:
     """
@@ -13,7 +14,7 @@ class HBnBFacade:
         """
         Initialize the Facade with in-memory repositories for each entity type.
         """
-        self.user_repository = SQLAlchemyRepository(User)
+        self.user_repository = UserRepository()
         self.place_repository = SQLAlchemyRepository(Place)
         self.review_repository = SQLAlchemyRepository(Review)
         self.amenity_repository = SQLAlchemyRepository(Amenity)
@@ -22,18 +23,21 @@ class HBnBFacade:
         # self.place_repository = InMemoryRepository()
         # self.review_repository = InMemoryRepository()
         # self.amenity_repository = InMemoryRepository()
-        self.seed_admin() 
+    #     try:
+    #         self.seed_admin()
+    #     except:
+    #         pass
 
-    def seed_admin(self):
-        admin_email = "admin@example.com"
-        if not self.get_user_by_email(admin_email):
-            self.create_user({
-                "first_name": "Admin",
-                "last_name": "User",
-                "email": admin_email,
-                "password": "admin123",
-                "is_admin": True
-            })
+    # def seed_admin(self):
+    #     admin_email = "admin@example.com"
+    #     if not self.get_user_by_email(admin_email):
+    #         self.create_user({
+    #             "first_name": "Admin",
+    #             "last_name": "User",
+    #             "email": admin_email,
+    #             "password": "admin123",
+    #             "is_admin": True
+    #         })
 
     # ---- User ----
     def create_user(self, user_data):
@@ -48,6 +52,7 @@ class HBnBFacade:
             User: The created User object.
         """
         user = User(**user_data)
+        user.hash_password(user_data['password'])
         self.user_repository.add(user)
         return user
         
@@ -74,7 +79,7 @@ class HBnBFacade:
         Returns:
             User: The User object if found, else None.
         """
-        return self.user_repository.get_by_attribute('email', email)
+        return self.user_repository.get_user_by_email(email)
     
     def get_all_users(self):
         """
@@ -85,6 +90,7 @@ class HBnBFacade:
         """
         return self.user_repository.get_all()
     
+
     def update_user(self, user_id, user_data):
         """
         Update user details. 
@@ -98,10 +104,14 @@ class HBnBFacade:
         """
         user = self.user_repository.get(user_id)
         if user:
-            for key, value in user_data.items():
-                if key != 'id' and key != 'email':
-                     setattr(user, key, value)
-        return user
+            update_data = user_data.copy()
+            if 'password' in update_data:
+                user.hash_password(update_data['password'])
+                update_data['password'] = user.password
+            
+            self.user_repository.update(user_id, update_data)
+            return self.user_repository.get(user_id)
+        return None
     
     # ---- Amenity ----
     def create_amenity(self, amenity_data):
