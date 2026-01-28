@@ -1,4 +1,4 @@
-from app.persistence.repository import SQLAlchemyRepository
+from app.persistence.repository import InMemoryRepository
 from app.models.user import User
 from app.models.amenity import Amenity
 from app.models.place import Place
@@ -12,10 +12,27 @@ class HBnBFacade:
         """
         Initialize the Facade with in-memory repositories for each entity type.
         """
-        self.user_repository = SQLAlchemyRepository(User)
-        self.place_repository = SQLAlchemyRepository(Place)
-        self.review_repository = SQLAlchemyRepository(Review)
-        self.amenity_repository = SQLAlchemyRepository(Amenity)
+        # self.user_repository = SQLAlchemyRepository(User)
+        # self.place_repository = SQLAlchemyRepository(Place)
+        # self.review_repository = SQLAlchemyRepository(Review)
+        # self.amenity_repository = SQLAlchemyRepository(Amenity)
+
+        self.user_repository = InMemoryRepository()
+        self.place_repository = InMemoryRepository()
+        self.review_repository = InMemoryRepository()
+        self.amenity_repository = InMemoryRepository()
+        self.seed_admin()  # <- call it here
+
+    def seed_admin(self):
+        admin_email = "admin@example.com"
+        if not self.get_user_by_email(admin_email):
+            self.create_user({
+                "first_name": "Admin",
+                "last_name": "User",
+                "email": admin_email,
+                "password": "admin123",
+                "is_admin": True
+            })
 
     # ---- User ----
     def create_user(self, user_data):
@@ -32,6 +49,7 @@ class HBnBFacade:
         user = User(**user_data)
         self.user_repository.add(user)
         return user
+        
     
     def get_user(self, user_id):
         """

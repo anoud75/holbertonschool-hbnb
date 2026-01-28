@@ -1,6 +1,6 @@
 from app.models.base import BaseModel
-from app import bcrypt
 import re
+from app.extensions import bcrypt
 
 class User(BaseModel):
     """
@@ -10,7 +10,7 @@ class User(BaseModel):
     common attributes (like ID, created_at) from BaseModel and strictly validates 
     input data such as email format and name length.
     """
-    def __init__(self, first_name, last_name, email, is_admin=False):
+    def __init__(self, first_name, last_name, email, password, is_admin=False):
         """
         Initialize a new User.
 
@@ -18,6 +18,7 @@ class User(BaseModel):
             first_name (str): The user's first name (max 50 chars).
             last_name (str): The user's last name (max 50 chars).
             email (str): A valid email address.
+            password (str): encrypted string serve as a user password
             is_admin (bool, optional): Administrative privilege flag. Defaults to False.
 
         Raises:
@@ -27,8 +28,8 @@ class User(BaseModel):
         self.first_name = first_name
         self.last_name = last_name
         self.email = email
+        self.hash_password(password)
         self.is_admin = is_admin
-        self.password = None
 
     @property
     def first_name(self):
@@ -93,11 +94,13 @@ class User(BaseModel):
             raise ValueError("Invalid email format")
         self._email = value
 
+
     def hash_password(self, password):
         """Hashes the password before storing it."""
-        self.password = bcrypt.generate_password_hash(password).decode('utf-8')
+        self.password = bcrypt.generate_password_hash(password)
 
 
     def verify_password(self, password):
         """Verifies if the provided password matches the hashed password."""
         return bcrypt.check_password_hash(self.password, password)
+
