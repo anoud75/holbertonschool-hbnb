@@ -101,8 +101,8 @@ class UserResource(Resource):
 
 @api.route('/users/')
 class AdminUserCreate(Resource):
-    @jwt_required
-    def post(slef):
+    @jwt_required()
+    def post(self):
         current_user = get_jwt()
         if not current_user.get('is_admin'):
             return {"error": "Admin privileges required"}, 403
