@@ -128,7 +128,14 @@ class PlaceResource(Resource):
         except ValueError as e:
             return {'error': str(e)}, 400
             
-        return {'message': 'Place updated successfully'}, 200
+        return {
+            'id': update_place.id,
+            'title': update_place.title,
+            'description': update_place.description,
+            'price': update_place.price,
+            'latitude': update_place.latitude,
+            'longitude': update_place.longitude,
+            }, 200
     
 
 @api.route('/<place_id>/reviews')

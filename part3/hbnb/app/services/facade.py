@@ -262,7 +262,7 @@ class HBnBFacade:
 
     def get_all_reviews(self):
         """Retrieve all reviews in the system."""
-        return self.amenity_repository.get_all()
+        return self.review_repository.get_all()
 
     def get_reviews_by_place(self, place_id):
         """

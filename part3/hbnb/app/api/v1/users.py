@@ -124,26 +124,21 @@ class AdminUserModify(Resource):
         """Admin can modify any user"""
         current_user = get_jwt()
         
-        # 1️⃣ Check admin privileges
         if not current_user.get('is_admin'):
             return {'error': 'Admin privileges required'}, 403
         
-        # 2️⃣ Get payload
         data = api.payload
         email = data.get('email')
 
-        # 3️⃣ Ensure email uniqueness
         if email:
             existing_user = facade.get_user_by_email(email)
             if existing_user and existing_user.id != user_id:
                 return {'error': 'Email already in use'}, 400
 
-        # 4️⃣ Update the user
         updated_user = facade.update_user(user_id, data)
         if not updated_user:
             return {'error': 'User not found'}, 404
 
-        # 5️⃣ Return updated info
         return {
             'id': updated_user.id,
             'first_name': updated_user.first_name,
