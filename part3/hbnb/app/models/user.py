@@ -1,6 +1,6 @@
 from app.models.base import BaseModel
 from app.extensions import bcrypt, db
-from sqlalchemy.orm import validates
+from sqlalchemy.orm import validates, relationship
 import re
 
 class User(BaseModel):
@@ -12,10 +12,9 @@ class User(BaseModel):
     password = db.Column(db.String(128), nullable=False)
     is_admin = db.Column(db.Boolean, default=False)
 
-    # def __init__(self, **kwargs):
-    #     if 'password' in kwargs:
-    #         kwargs['password'] = bcrypt.generate_password_hash(kwargs['password']).decode('utf-8')
-    #     super().__init__(**kwargs)
+
+    places = db.relationship('Place', back_populates='owner', lazy=True)
+    reviews = db.relationship('Review', back_populates='user', lazy=True)
 
     @validates('email')
     def validate_email(self, key, email):

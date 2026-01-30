@@ -1,26 +1,24 @@
- 
 from app.models.base import BaseModel
+from app.extensions import db
+from sqlalchemy.orm import validates
 
 class Amenity(BaseModel):
     """
     Represents an Amenity in the HBnB application.
-
-    Amenities are features associated with a Place, such as 'Wi-Fi', 'Swimming Pool',
-    or 'Air Conditioning'. This class inherits from BaseModel to gain standard
-    attributes like unique ID, creation timestamp, and update timestamp.
     """
-    def __init__(self, name):
-        """
-        Initialize a new Amenity.
+    __tablename__ = 'amenities' # Changed from 'amenity' to match ForeignKey references
+    
+    name = db.Column(db.String(50), nullable=False, unique=True)
+    
 
-        Args:
-            name (str): The name of the amenity (e.g., "Wi-Fi").
+    places = db.relationship('Place', secondary='place_amenity', back_populates='amenities')
 
-        Raises:
-            ValueError: If the amenity name exceeds 50 characters.
-        """
-        super().__init__()
-        self.name = name
-
-        if len(name) > 50:
-            raise ValueError("Name must be less than 50 characters")
+    @validates('name')
+    def validate_name(self, key, value):
+        if not isinstance(value, str): # FIXED: Was isinstance(self, key, value)
+            raise TypeError("Name must be a string")
+        if not value:
+            raise TypeError("Name can't be empty")
+        if len(value) > 50:
+            raise ValueError("Name must be less than or equal to 50 char")
+        return value
