@@ -1,0 +1,50 @@
+erDiagram
+    USER ||--o{ PLACE : owns
+    USER ||--o{ REVIEW : writes
+    PLACE ||--o{ REVIEW : has
+    PLACE }o--o{ AMENITY : has
+
+    USER {
+        CHAR_36 id PK
+        VARCHAR_50 first_name
+        VARCHAR_50 last_name
+        VARCHAR_120 email UK
+        VARCHAR_128 password_hash
+        BOOLEAN is_admin
+        DATETIME created_at
+        DATETIME updated_at
+    }
+
+    PLACE {
+        CHAR_36 id PK
+        VARCHAR_100 title
+        TEXT description
+        DECIMAL price
+        FLOAT latitude
+        FLOAT longitude
+        CHAR_36 owner_id FK
+        DATETIME created_at
+        DATETIME updated_at
+    }
+
+    REVIEW {
+        CHAR_36 id PK
+        TEXT text
+        INT rating
+        CHAR_36 place_id FK
+        CHAR_36 user_id FK
+        DATETIME created_at
+        DATETIME updated_at
+    }
+
+    AMENITY {
+        CHAR_36 id PK
+        VARCHAR_50 name
+        DATETIME created_at
+        DATETIME updated_at
+    }
+
+    PLACE_AMENITY {
+        CHAR_36 place_id PK_FK
+        CHAR_36 amenity_id PK_FK
+    }
