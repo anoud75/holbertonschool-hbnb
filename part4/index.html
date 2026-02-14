@@ -14,7 +14,7 @@
         </a>
 
         <nav>
-            <a href="login.html" class="login-button">Login</a>
+            <a href="login.html" class="login-button" id="login-link">Login</a>
         </nav>
     </header>
     <section class="hero">
@@ -27,17 +27,17 @@
 
             <div class="toolbar">
                 <div class="search-group">
-                    <label for="search-location">Where</label>
-                    <input type="text" id="search-location" placeholder="Search destinations">
+                    <label for="search-location"></label>
+                    <input type="text" id="search-location" placeholder="Search place">
                 </div>
                 
                 <div class="filter-group">
                     <label for="price-filter">Max Price</label>
                     <select id="price-filter">
-                        <option value="all">Any Price</option>
+                        <option value="all">All</option>
+                        <option value="10">Under $10</option>
+                        <option value="50">Under $50</option>
                         <option value="100">Under $100</option>
-                        <option value="200">Under $200</option>
-                        <option value="500">Under $500</option>
                     </select>
                 </div>
 

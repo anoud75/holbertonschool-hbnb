@@ -5,36 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Review</title>
     <link rel="stylesheet" href="styles.css">
-    <link rel="icon" href="/part4/images/icon.png">
+    <link rel="icon" href="images/icon.png">
 </head>
 <body>
     <header>
         <a href="index.html">
-            <img src="/part4/images/logo.png" alt="Hbnb logo" class="logo">
+            <img src="images/logo.png" alt="HBnB Logo" class="logo">
         </a>
-        <nav>
-            <a href="login.html" class="login-button">Login</a>
-        </nav>
     </header>
-    <main>
-        <form action="place.html" class="form add-review">
+
+    <main class="main-centered">
+        <form id="review-form" class="form">
             <h2>Write a Review</h2>
             
-            <label for="rating">Rating</label>
-            <select id="rating" name="rating" required>
-                <option value="5">★★★★★ (Excellent)</option>
-                <option value="4">★★★★☆ (Good)</option>
-                <option value="3">★★★☆☆ (Average)</option>
-                <option value="2">★★☆☆☆ (Poor)</option>
-                <option value="1">★☆☆☆☆ (Terrible)</option>
-            </select>
-
-            <label for="review-text">Your Comment</label>
-            <textarea id="review-text" name="review-text" rows="5" required placeholder="Share your experience..."></textarea>
-
+            <label for="review-text">Your Review</label>
+            <textarea id="review-text" name="text" rows="5" required placeholder="Share your experience..."></textarea>
+            
             <button type="submit" class="submit-button">Submit Review</button>
         </form>
     </main>
+
     <footer>
         <p>© 2026 HBnB. All rights reserved.</p>
     </footer>
